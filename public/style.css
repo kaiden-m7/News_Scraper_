@@ -1,13 +1,25 @@
 .navbar-brand {
     font-size: 35px;
+    /* color: rgb(196, 70, 70); */
+    font-family: 'Times New Roman', Times, serif;
+}
+.navbar-expand-lg {
+    margin-bottom: 0;
+    background-color: rgb(184, 173, 153);
+}
+
+div {
+    display: block;
 }
 
 .navbar-nav{
     display: inline;
+    
 }
 
 li {
     display: list-item;
+    float: left;
 }
 
 .jumbotron {
@@ -30,18 +42,20 @@ li {
     text-align: center;
     width: 100%;
     top: 30%;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: 100;
 }
 
 .caption h1 {
     color: rgb(196, 70, 70);
-    font-size: 60px;
+    font-size: 70px;
    
 }
 
 .caption h3 {
     color: rgb(196, 70, 70);
-    font-size: 30px;
+    font-size: 40px;
+    
     
 }
 
@@ -53,6 +67,16 @@ li {
     left: 0;
     z-index: auto;
     opacity: 0.6;
-    background: rgb(206, 199, 199);
+    background: rgb(231, 223, 223);
+    margin-top: 78px;
+    height: 625px;
 }
 
+.container p {
+    position: absolute;
+    
+}
+
+.footer {
+    background-color: rgb(184, 173, 153);
+}
