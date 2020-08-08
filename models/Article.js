@@ -3,7 +3,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 //create schema and model 
-
 var ArticleSchema = new Schema({
     // `title` is required and of type String
     title: {

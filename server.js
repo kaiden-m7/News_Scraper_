@@ -12,18 +12,18 @@ var PORT = 3000;
 
 var app = express();
 
+//connection to db
+mongoose.connect("mongodb://localhost/scraped_news", {useNewUrlParser: true});
+var db = mongoose.connection;
 
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines"; 
-
-mongoose.connect(MONGODB_URI);
+db
 
 app.use(logger("dev"));
-// Parse request body as JSON
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// Make public a static folder
 app.use(express.static("public"));
 
+//GET route using axios to scrape BBC news site
 app.get("/scrape", function(req, res){
     axios.get("https://www.bbc.com/news/").then(function(response){
         let $ = cheerio.load(response.data);
@@ -51,10 +51,48 @@ app.get("/scrape", function(req, res){
     });
 });
 
+//getting all upated news from site through DB
 app.get("/articles", function(req, res) {
-    
-})
+    db.Article.find({})
+    .then(function(dbArticle) {
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
+      res.json(err);
+    });
+});
 
+//user search for article 
+app.get("/articles/:id", function(req, res) {
+    
+    db.Article.findOne({ _id: req.params.id })
+      
+      .populate("note")
+      .then(function(dbArticle) {
+        res.json(dbArticle);
+      })
+      .catch(function(err) {
+        res.json(err);
+      });
+  });
+
+  //POST route for articles to save and update daily 
+  app.post("/articles/:id", function(req, res) {
+    db.Note.create(req.body)
+      .then(function(dbNote) {
+       
+        return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
+      })
+      .then(function(dbArticle) {
+
+        res.json(dbArticle);
+      })
+      .catch(function(err) {
+        res.json(err);
+      });
+  });
+  
+//connection to server 
 app.listen(PORT, function() {
     console.log("App running on port " + PORT);
   });
