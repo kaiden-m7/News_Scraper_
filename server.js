@@ -13,10 +13,10 @@ var PORT = 3000;
 var app = express();
 
 //connection to db
-mongoose.connect("mongodb://localhost/scraped_news", {useNewUrlParser: true});
-var db = mongoose.connection;
 
-db
+mongoose.connect('mongodb://localhost/news-scraper')
+mongoose.Promise = global.Promise;
+
 
 app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
